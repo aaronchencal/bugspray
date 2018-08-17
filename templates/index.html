@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Bug Spray</title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static', filename='style.css') }}>
+</head>
+<body>
+  <div class="flex-container">
+      <div class="left">
+          <p class="header">code.py</p>
+          <pre id="editor">
+def a():
+      i = 0
+      j = b(i)
+      return j
+
+def b(z):
+      k = 5
+      if z == 0:
+          c()
+      return k/z
+
+def c():
+      error()
+
+a()
+          </pre>
+      </div>
+      <div class="middle">
+            <button id="btn" class="runbutton" onclick="submit()" clicked="true">run▶</button>
+            <div class="description" id="description">
+                <p class = "richtext">
+                Welcome to bugspray! Paste your erroring Python code into the text editor
+                on the left and click  above to get started! We'll try to help you
+                understand what's going wrong.
+                </p>
+          </div>
+    </div>
+      <div class="right" id="info">
+        <div class="header2">
+          <p class="resulttext"> bugspray </p>
+        </div>
+        <div class="traceback" id="traceback">
+          <!-- <pre class="result" id="results"> </pre> -->
+        </div>
+      </div>
+  </div>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='src/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+      <script>
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/twilight");
+      editor.session.setMode("ace/mode/python");
+    </script>
+
+      <script src="{{ url_for('static', filename='main.js') }}"></script>
+
+</body>
+</html>
