@@ -29,11 +29,11 @@ a()
           </pre>
       </div>
       <div class="middle">
-            <button id="btn" class="runbutton" onclick="submit()" clicked="true">run▶</button>
+            <button id="btn" class="runbutton" onclick="submit()" curind="0" clicked="true">run▶</button>
             <div class="description" id="description">
-                <p class = "richtext">
-                Welcome to bugspray! Paste your erroring Python code into the text editor
-                on the left and click  above to get started! We'll try to help you
+                <p class = "richtext" id="richtext">
+                Welcome to bugspray! Copy and paste your erroring Python code into the text editor
+                on the left and click the big green button above to get started! We'll try to help you
                 understand what's going wrong.
                 </p>
           </div>
@@ -43,10 +43,12 @@ a()
           <p class="resulttext"> bugspray </p>
         </div>
         <div class="traceback" id="traceback">
-          <!-- <pre class="result" id="results"> </pre> -->
+              <!-- dynamically added divs -->
         </div>
       </div>
   </div>
+
+<!-- ⟳ -->
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="{{ url_for('static', filename='src/ace.js') }}" type="text/javascript" charset="utf-8"></script>

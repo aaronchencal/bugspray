@@ -10,7 +10,7 @@ class Process(mp.Process):
     def run(self):
         try:
             mp.Process.run(self)
-            self._cconn.send(None)
+            self._cconn.send(1)
         except Exception as e:
             tb = traceback.format_exc()
             self._cconn.send((e, tb))

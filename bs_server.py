@@ -14,6 +14,7 @@ from RestrictedPython import compile_restricted
 from RestrictedPython import safe_builtins
 from RestrictedPython.PrintCollector import PrintCollector
 
+#A module is a file containing Python definitions and statements.
 
 app = Flask(__name__)
 
@@ -48,6 +49,8 @@ def run_code():
         p.join(2)
         p.terminate()
         if p.exception:
+            if p.exception == 1:
+                return jsonify("no error!")
             tb = p.exception[1]
             return getTraceback(filename, pysplit, tb)
         return jsonify("timed out! you have an infinite loop!")

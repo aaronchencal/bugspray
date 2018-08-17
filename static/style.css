@@ -1,3 +1,6 @@
+.color {
+    background-color:	#8ac7db;
+}
 
 .left {
   display: flex;
@@ -104,12 +107,12 @@ body {
   outline: none;
 }
 
-.runbutton:active {
-  background: #6BD501
+.runbutton:hover {
+  background: #6BD501;
 }
 
-.runbutton:hover {
-  background: #6BD501
+.runbutton:active {
+  background: #59b201;
 }
 
 .result {
