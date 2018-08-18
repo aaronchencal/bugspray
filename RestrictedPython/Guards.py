@@ -28,30 +28,47 @@ else:
 safe_builtins = {}
 
 _safe_names = [
+    'super',
     'None',
     'False',
     'True',
     'abs',
+    'all',
     'bool',
     'callable',
     'chr',
     'complex',
+    'classmethod',
     'divmod',
+    'dict',
+    'enumerate',
+    'filter',
     'float',
+    'format',
     'hash',
+    'getattr',
+    'setattr',
     'hex',
     'id',
     'int',
+    'iter',
     'isinstance',
     'issubclass',
     'len',
+    'list',
+    'object',
     'oct',
     'ord',
+    'map',
+    'min',
+    'max',
+    'next',
     'pow',
     'range',
     'repr',
     'round',
     'slice',
+    'sum',
     'str',
     'tuple',
     'zip'
@@ -308,3 +325,7 @@ def guarded_unpack_sequence(it, spec, _getiter_):
         ret[idx] = guarded_unpack_sequence(ret[idx], child_spec, _getiter_)
 
     return ret
+
+
+safe_builtins['__metaclass__'] = type
+safe_builtins['_iter_unpack_sequence_'] = guarded_iter_unpack_sequence

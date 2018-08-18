@@ -129,21 +129,55 @@ const submit = () => {
       buttn.setAttribute("curind", newinde.toString());
 
      if(inde == 0) {
-        richtext.textContent = "The \"traceback\" is a chain of function calls, leading up \r\n \
+        richtext.textContent = "The \"traceback\" is a chain of function calls, leading up \
         to the error. \"most recent call last\" means that this chain starts from the first function call \
         and ends with the function call causing the error. "
         highlight(divs, inde)
         return
       }
       else if(inde == 1) {
-      richtext.textContent = divs[parseInt(inde)].firstChild.textContent; //TODO: send line to backend
+        var line = divs[parseInt(inde)].firstChild.textContent.split(',')[1]
+        var indexx = parseInt(line.substr(6));
+        setMarker(indexx - 1);
+      richtext.textContent = "This tells us information about the very first function call. A \<module\> \
+      is a file containing python code. So, this tells us that inside our file \
+      code.py, we called the first function that would eventually lead to an error on line " + indexx + "."
       highlight(divs, inde)
         return
       }
+      else if(inde == 2) {
+        richtext.textContent = "After this info, the suspect line of code is printed for us!\
+        The traceback is usually paired up like this: a line of info followed by the line of code it talks about."
+        highlight(divs, inde)
+        return
+      }
+      else if(inde == lengthh - 2) {
+        richtext.textContent = "This is the line of code directly responsible for the error."
+        highlight(divs, inde)
+        return
+      }
       else if( inde == lengthh - 1) {
-          //do something special
+          //do something special, its the ERROR!!!
           highlight(divs, inde);
-          richtext.textContent = "<text from server>" //TODO: backend
+          richtext.textContent = ""
+          fetch("/api/analyze?code=" + encodeURIComponent(divs[parseInt(inde)].firstChild.textContent), {
+                headers : {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                 }
+
+              })
+              .then((res) => {
+                if (res.ok) {
+                  return res.json()
+                }
+                else {
+                  console.log("error")
+                }
+              })
+              .then((mydata)=> {
+                  richtext.textContent = mydata;
+              })
           return
       }
       else if(inde == lengthh) {
@@ -157,14 +191,17 @@ const submit = () => {
         return
       }
       if(inde % 2 == 1) {
-        var line = divs[parseInt(inde)].firstChild.textContent.split(',')[1]
+        var funcname = divs[parseInt(inde)].firstChild.textContent.split(" ").pop();
+        var line = divs[parseInt(inde)].firstChild.textContent.split(',')[1];
         var indexx = parseInt(line.substr(6));
         setMarker(indexx - 1);
 
-        richtext.textContent = divs[parseInt(inde)].firstChild.textContent; //TODO: send line to backend
-        highlight(divs, inde)
+        richtext.textContent = "In our file code.py, we were inside the function " + funcname +  ". \
+        It was in this function, on line " + indexx + ", that we executed something that eventually caused an error.";
+
+        highlight(divs, inde);
       } else {
-        richtext.textContent = divs[parseInt(inde)].firstChild.textContent; //TODO: send line to backend
+        richtext.textContent = "The offending line printed for us."
         highlight(divs, inde)
       }
 
