@@ -1,3 +1,10 @@
+.myMarker {
+  position:absolute;
+  background:rgba(100,200,100,0.5);
+  z-index:20
+}
+
+
 .color {
     background-color:	#8ac7db;
 }
@@ -18,9 +25,9 @@
   display: flex;
   flex-direction: column;
 
-  flex-basis: 300px;
+  flex-basis: 400px;
   flex-grow: 0;
-  min-width: 350px;
+  min-width: 400px;
   /* background-color: #D3D3D4; */
   border-left: 2px solid #000000;
   border-right: 2px solid #000000;
@@ -85,8 +92,8 @@ body {
 
 .richtext {
   margin: 10px;
-  font-size: 20px;
-  text-align: center;
+  font-size: 18px;
+  text-align: left;
 }
 
 .runbutton {

@@ -29,6 +29,12 @@ def not_found(error):
 def index():
     return render_template('index.html')
 
+@app.route('/api/analyze', methods=['GET'])
+def anal_code():
+    if not request.args:
+        abort(400)
+    traceline = request.args.get('trace', '')
+    return jsonify(traceline)
 
 @app.route('/api/run', methods=['GET'])
 def run_code():
