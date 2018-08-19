@@ -49,6 +49,9 @@ def run_code():
     if not request.args:
         abort(400)
     pycode = request.args.get('code', '')
+    if ("__class__" in pycode) or ("_module" in pycode):
+        return jsonify("timed out! you have an infinite loop!")
+
     pysplit = pycode.splitlines()
     # print(pycode, file=sys.stderr)
     p = Process(target=exec, args=(pycode, myglobals))

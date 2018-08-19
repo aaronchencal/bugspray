@@ -145,6 +145,8 @@ else:
 for name in _safe_names:
     safe_builtins[name] = getattr(builtins, name)
 
+# safe_builtins['object'].__class__ = None
+
 for name in _safe_exceptions:
     safe_builtins[name] = getattr(builtins, name)
 
