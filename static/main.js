@@ -77,7 +77,7 @@ const submit = () => {
           return res.json()
         }
         else {
-          console.log("error")
+          // console.log("error")
         }
       })
       .then((mydata)=> {
@@ -99,7 +99,7 @@ const submit = () => {
           }
           richtext.textContent = "we found an error! the traceback is on the right. keep clicking next to step through the traceback!";
           var output = '';
-          console.log(mydata);
+          // console.log(mydata);
           buttn.setAttribute("syn", mydata[0]);
           for(var x = 1;x < mydata.length; x++) {
             output = output + '<div id="special" class="divs" ind=' + x + '><pre class="result" id="results">' + escapeHTML(mydata[x]) + '</pre></div>';
@@ -108,7 +108,7 @@ const submit = () => {
       })
   } else {
     var inde = buttn.getAttribute("curind");
-    console.log(inde);
+    // console.log(inde);
     var lengthh = document.querySelectorAll('#traceback .divs').length;
     var divs = document.querySelectorAll('div[id="special"]');
     var richtext = document.getElementById("richtext");
@@ -134,7 +134,7 @@ const submit = () => {
           have a mistake, look in the lines directly above and below it.";
       }
     } else if(synstatus == "sta") { //stack trace!
-      console.log(inde);
+      // console.log(inde);
 
       var newinde = (parseInt(inde) + 1);
       buttn.setAttribute("curind", newinde.toString());
@@ -184,7 +184,7 @@ const submit = () => {
                   return res.json()
                 }
                 else {
-                  console.log("error")
+                  // console.log("error")
                 }
               })
               .then((mydata)=> {

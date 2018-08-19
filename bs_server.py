@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-from flask import Flask, request, jsonify, make_response, render_template
+from flask import Flask, request, jsonify, make_response, render_template, send_from_directory
 from io import StringIO
 import contextlib
 import signal
 import sys
 import time
+import os
 from processing import Process
 from errdict import edict
 
@@ -63,6 +64,10 @@ def run_code():
         return getTraceback(filename, pysplit, tb)
     return jsonify("timed out! you have an infinite loop!")
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                          'favicon.ico')
 
 if __name__ == '__main__':
     app.run(debug=False)

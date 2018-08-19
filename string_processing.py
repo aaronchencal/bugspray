@@ -4,13 +4,13 @@ from flask import jsonify
 
 def getSynTraceback(filename, pysplit, traceback):
     strs = traceback.replace("<string>", filename).splitlines()
-    print(strs, file=sys.stderr)
+    # print(strs, file=sys.stderr)
     strs = ["syn"] + [strs[0]] + strs[5:]
     return jsonify(strs)
 
 def getTraceback(filename, pysplit, tb):
     strs = tb.replace("<string>", filename).splitlines()
-    print(strs, file=sys.stderr)
+    # print(strs, file=sys.stderr)
     strs = [strs[0]] + strs[5:]
     '''
     0: traceback
