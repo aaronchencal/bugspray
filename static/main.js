@@ -3,7 +3,8 @@ function escapeHTML(s) {
     return s.replace(/&/g, '&amp;')
             .replace(/"/g, '&quot;')
             .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+            .replace(/>/g, '&gt;')
+            .replace(/#/g, '&#35;');
 }
 
 var Range = require("ace/range").Range // not the window Range!!
@@ -80,6 +81,12 @@ const submit = () => {
         }
       })
       .then((mydata)=> {
+         if( mydata == null) {
+           reset()
+           finish(bttn, richtext)
+           richtext.textContent = "woah, something bad happened. try again?"
+           return
+         }
           buttn.setAttribute("clicked", "false");
           buttn.innerText = 'next▶';
 
@@ -106,6 +113,10 @@ const submit = () => {
     var divs = document.querySelectorAll('div[id="special"]');
     var richtext = document.getElementById("richtext");
     var synstatus = buttn.getAttribute("syn");
+
+    if (divs == null) {
+      return
+    }
 
     if(synstatus == "syn") { //syntax error
       if(inde == "1") {
@@ -152,6 +163,7 @@ const submit = () => {
         return
       }
       else if(inde == lengthh - 2) {
+
         richtext.textContent = "This is the line of code directly responsible for the error."
         highlight(divs, inde)
         return
@@ -176,7 +188,8 @@ const submit = () => {
                 }
               })
               .then((mydata)=> {
-                  richtext.textContent = mydata;
+                // mydata = escapeHTML(mydata);
+                richtext.textContent = "The format is \"Error : Description.\" " + mydata;
               })
           return
       }
@@ -201,7 +214,7 @@ const submit = () => {
 
         highlight(divs, inde);
       } else {
-        richtext.textContent = "The offending line printed for us."
+        richtext.textContent = "The line printed for us."
         highlight(divs, inde)
       }
 

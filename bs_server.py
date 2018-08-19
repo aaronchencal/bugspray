@@ -21,7 +21,7 @@ app = Flask(__name__)
 filename = "code.py"
 
 myglobals = {'__builtins__': safe_builtins,
-'_print_': PrintCollector,
+'__print__' : print
 }
 
 @app.errorhandler(400)
@@ -42,7 +42,7 @@ def anal_code():
     # print(pyarr[0], file=sys.stderr)
 
     return jsonify(edict.get(pyarr[0], 'ooh, I haven\'t seen this error before. Sorry!'))
-
+# "\nRead more at https://docs.python.org/3/library/exceptions.html#" + pyarr[0][:len(pyarr[0])-1])
 @app.route('/api/run', methods=['GET'])
 def run_code():
     if not request.args:
@@ -50,26 +50,18 @@ def run_code():
     pycode = request.args.get('code', '')
     pysplit = pycode.splitlines()
     # print(pycode, file=sys.stderr)
-
-    try:
-        p = Process(target=exec, args=(pycode, myglobals))
-        p.start()
-        p.join(2)
-        p.terminate()
-        if p.exception:
-            if p.exception == 1:
-                return jsonify("no error!")
-            tb = p.exception[1]
-            return getTraceback(filename, pysplit, tb)
-        return jsonify("timed out! you have an infinite loop!")
-        # exec(byte_code, myglobals)
-    except SyntaxError as e: #the compilation failed: exec is safe
-        try:
-            exec(pycode, myglobals)
-        except Exception:
-            return getSynTraceback(filename, pysplit)
-
-    return jsonify("no error!")
+    p = Process(target=exec, args=(pycode, myglobals))
+    p.start()
+    p.join(2)
+    p.terminate()
+    if p.exception:
+        if p.exception == 1:
+            return jsonify("no error!")
+        tb = p.exception[1]
+        if isinstance(p.exception[0], SyntaxError):
+            return getSynTraceback(filename, pysplit, tb)
+        return getTraceback(filename, pysplit, tb)
+    return jsonify("timed out! you have an infinite loop!")
 
 
 if __name__ == '__main__':

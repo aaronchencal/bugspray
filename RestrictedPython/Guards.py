@@ -66,6 +66,7 @@ _safe_names = [
     'pow',
     'range',
     'repr',
+    'print',
     'round',
     'slice',
     'sum',
@@ -329,3 +330,4 @@ def guarded_unpack_sequence(it, spec, _getiter_):
 
 safe_builtins['__metaclass__'] = type
 safe_builtins['_iter_unpack_sequence_'] = guarded_iter_unpack_sequence
+safe_builtins['__name__'] = '__main__'
